@@ -16,10 +16,63 @@ interface User extends Document {
   attemptedQuestions: Question[];
   favouriteQuestions: Question[];
   addQuestions: Question[];
-  shareQuestions: [string];
+  shareQuestions: string[]; //* share question links
 }
 
-const userSchema: Schema<User> = new Schema({});
+const userSchema: Schema<User> = new Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    match: [
+      /[\x00-\x7F]+@[\x00-\x7F]+\.(com|in|org)/,
+      "Please enter a valid email address",
+    ],
+  },
+  password: {
+    type: String,
+    required: true,
+    min: 6,
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  verifyCode: String,
+  verifyCodeExpires: Date,
+  forgotPasswordCode: String,
+  forgotPasswordCodeExpires: Date,
+  solvedQuestions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Question",
+    },
+  ],
+  attemptedQuestions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Question",
+    },
+  ],
+  favouriteQuestions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Question",
+    },
+  ],
+  addQuestions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Question",
+    },
+  ],
+  shareQuestions: [String],
+});
 
 const User =
   (mongoose.models.User as mongoose.Model<User>) ||

@@ -187,6 +187,20 @@
 					"data": "",
 					"after": "",
 					"options": ""
+				},
+				{
+					"id": "ba40c294-6a1f-4fc1-b635-b3f6a90458a2",
+					"name": "isVerified",
+					"datatype": "Boolean",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"list": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"after": "",
+					"options": ""
 				}
 			],
 			"relations": [],
@@ -451,7 +465,7 @@
 		"replaceSpace": "_",
 		"color": "transparent",
 		"sideSelections": true,
-		"isDirty": false,
+		"isDirty": true,
 		"storedin": {
 			"major": 7,
 			"minor": 4,
@@ -468,7 +482,7 @@
 		"companyUrl": "",
 		"def_coltopk": true,
 		"def_others": "",
-		"lastSaved": 1714844692957
+		"lastSaved": 1714844693392
 	},
 	"otherObjects": {},
 	"diagrams": {
@@ -488,7 +502,7 @@
 					"referencedItemId": "fb775b03-cf3c-475f-bf99-2f8faf1f046a",
 					"x": 72,
 					"y": 67,
-					"gHeight": 261,
+					"gHeight": 279,
 					"gWidth": 296,
 					"color": "#ffffff",
 					"background": "#03a9f4",
