@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import Question from "./questions";
-import { List } from "postcss/lib/list";
+import { List } from "./list";
 
 //creeating User as interface for exporrtingl later
 

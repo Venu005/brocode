@@ -37,12 +37,16 @@ export async function POST(req: Request) {
     } else {
       throw new Error("Invalid list type");
     }
+
     const list = await List.create({
+      listName,
       listType,
       owner: user._id,
       questions: questionIds,
       links,
     });
+    user.createdLists.push(list);
+    await user.save();
     return Response.json(
       {
         success: true,
