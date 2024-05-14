@@ -17,6 +17,7 @@ import { z } from "zod";
  */
 export const questionSchema = z.object({
   owner: z.string(),
+  lisName: z.string(),
   questionDescription: z.string(),
   hint: z.string().optional(),
   testCases: z.array(z.string()),

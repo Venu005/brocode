@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import Question from "./questions";
+import { List } from "postcss/lib/list";
 
 //creeating User as interface for exporrtingl later
 
@@ -12,6 +13,7 @@ interface User extends Document {
   verifyCodeExpires: Date;
   forgotPasswordCode: string;
   forgotPasswordCodeExpires: Date;
+  createdLists: List[];
   solvedQuestions: Question[];
   attemptedQuestions: Question[];
   favouriteQuestions: Question[];
@@ -47,6 +49,12 @@ const userSchema: Schema<User> = new Schema({
   verifyCodeExpires: Date,
   forgotPasswordCode: String,
   forgotPasswordCodeExpires: Date,
+  createdLists: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "List",
+    },
+  ],
   solvedQuestions: [
     {
       type: mongoose.Schema.Types.ObjectId,

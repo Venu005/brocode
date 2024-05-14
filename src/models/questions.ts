@@ -1,8 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 import User from "./user";
 import { Solution } from "./solutions";
+import { List } from "postcss/lib/list";
 interface Question extends Document {
   owner: User;
+  listName: List;
   questionDescription: string;
   hint: string;
   testCases: string[]; // may be changing this a bit
@@ -16,11 +18,16 @@ interface Question extends Document {
   acceptenceRate: number;
   createdAt: Date;
 }
-export const questionSchema: Schema<Question> = new Schema(
+const questionSchema: Schema<Question> = new Schema(
   {
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
+    },
+    listName: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "List",
       required: true,
     },
     questionDescription: {
