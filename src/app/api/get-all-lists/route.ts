@@ -1,14 +1,13 @@
 import User from "@/models/user";
 import mongoose from "mongoose";
+import { getServerSession } from "next-auth/next";
 
-export async function POST(req: Request) {
-  //todo: convert to GET
+export async function GET(req: Request) {
+  //todo: converted to GET after logged in will work
+  const session = await getServerSession();
+  const userId = session?.user?._id;
   try {
-    const { username } = await req.json();
-    if (!username) {
-      throw new Error("No username found");
-    }
-    const user = await User.findOne({ username });
+    const user = await User.findById(userId);
     if (!user) {
       return Response.json(
         {
