@@ -2,6 +2,7 @@ import User from "@/models/user";
 import mongoose from "mongoose";
 
 export async function POST(req: Request) {
+  //todo: convert to GET
   try {
     const { username } = await req.json();
     if (!username) {
@@ -17,7 +18,6 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    //todo: add aggregation pipeline
     const lists = await User.aggregate([
       {
         $match: {
