@@ -1,0 +1,3 @@
+interface Request {
+  files: any;
+}

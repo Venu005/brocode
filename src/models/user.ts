@@ -8,9 +8,11 @@ interface User extends Document {
   username: string;
   email: string;
   password: string;
+  profileImage: string;
   isVerified: boolean;
   verifyCode: string;
   verifyCodeExpires: Date;
+  hasCompletedProfileSetup: boolean;
   forgotPasswordCode: string;
   forgotPasswordCodeExpires: Date;
   createdLists: List[];
@@ -41,12 +43,19 @@ const userSchema: Schema<User> = new Schema({
     required: true,
     min: 6,
   },
+  profileImage: {
+    type: String,
+  },
   isVerified: {
     type: Boolean,
     default: false,
   },
   verifyCode: String,
   verifyCodeExpires: Date,
+  hasCompletedProfileSetup: {
+    type: Boolean,
+    default: false,
+  },
   forgotPasswordCode: String,
   forgotPasswordCodeExpires: Date,
   createdLists: [
