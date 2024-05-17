@@ -41,6 +41,7 @@ export async function POST(req: Request) {
       );
     }
     user.profileImage = profileImage.secure_url;
+    user.hasCompletedProfileSetup = true; //if not updated will redirect to updating or to dashboard
     await user.save();
   } catch (error) {
     return Response.json(
