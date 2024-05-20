@@ -4,6 +4,7 @@ import "./globals.css";
 import AuthProvider from "@/context/AuthProvider";
 import { ThemeProvider } from "@/components/theme-provider.tsx";
 import NavBar from "@/components/NavBar";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
             >
               <NavBar />
               {children}
+              <Toaster />
             </ThemeProvider>
           </body>
         </AuthProvider>

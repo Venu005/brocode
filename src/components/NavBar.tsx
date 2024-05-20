@@ -1,11 +1,12 @@
+"use client";
 import Link from "next/link";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import { Button, buttonVariants } from "./ui/button";
-import { getServerSession } from "next-auth/next";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { ModdleToggle } from "./ModeToggle";
-const NavBar = async () => {
-  const session = await getServerSession();
+
+function NavBar() {
+  const { data: session } = useSession();
   const user = session?.user;
   return (
     <nav className="sticky z-[100] h-14 inset-x-0 top-0 w-full border-b  border-gray-200 dark:border-amber-500  bg-white/75 dark:bg-black/75 backdrop-blur-lg transition-all">
@@ -18,12 +19,15 @@ const NavBar = async () => {
           <div className="h-full flex items-center space-x-4">
             {user ? (
               <>
+                <span className="mr-4">
+                  Welcome, {user.username || user.email}
+                </span>
                 <Button
                   onClick={() => signOut()}
-                  className="w-full md:auto bg-slate-100 text-black"
-                  variant="ghost"
+                  className="w-full md:w-auto bg-slate-100 text-black"
+                  variant="outline"
                 >
-                  Log Out
+                  Logout
                 </Button>
               </>
             ) : (
@@ -55,6 +59,6 @@ const NavBar = async () => {
       </MaxWidthWrapper>
     </nav>
   );
-};
+}
 
 export default NavBar;
