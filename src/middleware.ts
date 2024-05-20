@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export { default } from "next-auth/middleware";
 
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/(api|trpc)(.*)"],
+  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };
 
 export async function middleware(request: NextRequest) {
@@ -14,9 +14,10 @@ export async function middleware(request: NextRequest) {
   });
   const url = request.nextUrl;
   if (
-    (token && url.pathname.startsWith("/sign-in")) ||
-    url.pathname.startsWith("/sign-up") ||
-    url.pathname.startsWith("verify-code")
+    token &&
+    (url.pathname.startsWith("/sign-in") ||
+      url.pathname.startsWith("/sign-up") ||
+      url.pathname.startsWith("/verify-code"))
   ) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
