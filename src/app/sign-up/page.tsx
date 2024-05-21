@@ -68,7 +68,7 @@ const SignUpPage = () => {
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmitting(true);
     try {
-      const result = await axios.post<ApiResponse>("/api/auth/signup", data);
+      const result = await axios.post<ApiResponse>("/api/sign-up", data);
       toast({
         title: "Success",
         description: result.data.message,
@@ -171,7 +171,7 @@ const SignUpPage = () => {
                     Please wait
                   </>
                 ) : (
-                  "sign Up"
+                  "Sign Up"
                 )}
               </Button>
             </form>
