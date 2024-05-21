@@ -61,7 +61,7 @@ const SignInPage = () => {
   return (
     <>
       <MaxWidthWrapper className="mt-10 flex flex-col md:flex-row">
-        <div className="w-full max-w-md p-8 space-y-8 bg-stone-300 dark:bg-white rounded-lg shadow-md md:w-1/2 ml-3">
+        <div className="w-full max-w-md p-8 space-y-8 bg-stone-200 dark:bg-white rounded-lg shadow-md md:w-1/2 ml-3">
           <div className="text-center">
             <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 ">
               Welcome back Bro
@@ -110,8 +110,8 @@ const SignInPage = () => {
           </div>
         </div>
 
-        <div className="sm:px-24 -ml-6">
-          <LottieAnimation />
+        <div className="sm:px-24 -ml-6 hidden sm:block">
+          <LottieAnimation url={"/sign_in.lottie"} />
         </div>
       </MaxWidthWrapper>
     </>

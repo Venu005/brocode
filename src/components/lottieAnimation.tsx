@@ -2,10 +2,10 @@
 import { DotLottiePlayer } from "@dotlottie/react-player";
 import "@dotlottie/react-player/dist/index.css";
 
-const LottieAnimation = () => {
+const LottieAnimation = ({ url }: { url: string }) => {
   return (
     <DotLottiePlayer
-      src="/sign_in.lottie"
+      src={url}
       autoplay
       loop
       className="rounded-lg"
