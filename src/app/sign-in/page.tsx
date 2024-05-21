@@ -18,9 +18,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import LottieAnimation from "@/components/lottieAnimation";
+import { useTheme } from "next-themes";
 const SignInPage = () => {
   const router = useRouter();
-
+  const { theme } = useTheme();
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -57,53 +59,62 @@ const SignInPage = () => {
   };
 
   return (
-    <MaxWidthWrapper className="mt-10">
-      <div className="w-full max-w-md p-8 space-y-8 bg-stone-300 dark:bg-white rounded-lg shadow-md">
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 ">
-            Welcome back Bro
-          </h1>
-          <p className="mb-4">Sign In to continue</p>
+    <>
+      <MaxWidthWrapper className="mt-10 flex flex-col md:flex-row">
+        <div className="w-full max-w-md p-8 space-y-8 bg-stone-300 dark:bg-white rounded-lg shadow-md md:w-1/2 ml-3">
+          <div className="text-center">
+            <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 ">
+              Welcome back Bro
+            </h1>
+            <p className="mb-4">Sign In to continue</p>
+          </div>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                name="identifier"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="">Email/Username</FormLabel>
+                    <Input {...field} placeholder="yourname@emaildomain" />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="password"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="">Password</FormLabel>
+                    <Input {...field} type="password" placeholder="******" />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button className="w-full" type="submit">
+                Login
+              </Button>
+            </form>
+          </Form>
+          <div className="text-center mt-4">
+            <p className="">
+              Not a member yet?{" "}
+              <Link
+                href="/sign-up"
+                className="text-blue-600 hover:text-blue-800"
+              >
+                Sign up
+              </Link>
+            </p>
+          </div>
         </div>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              name="identifier"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="">Email/Username</FormLabel>
-                  <Input {...field} placeholder="yourname@emaildomain" />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="password"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="">Password</FormLabel>
-                  <Input {...field} type="password" placeholder="******" />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button className="w-full" type="submit">
-              Login
-            </Button>
-          </form>
-        </Form>
-        <div className="text-center mt-4">
-          <p className="">
-            Not a member yet?{" "}
-            <Link href="/sign-up" className="text-blue-600 hover:text-blue-800">
-              Sign up
-            </Link>
-          </p>
+
+        <div className="sm:px-24 -ml-6">
+          <LottieAnimation />
         </div>
-      </div>
-    </MaxWidthWrapper>
+      </MaxWidthWrapper>
+    </>
   );
 };
 
