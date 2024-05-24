@@ -52,6 +52,8 @@ export const authOptions: NextAuthOptions = {
         token._id = user._id?.toString();
         token.isVerified = user.isVerified;
         token.username = user.username;
+        token.hasCompletedProfileSetup = user.hasCompletedProfileSetup;
+        token.profileImage = user.profileImage;
       }
 
       return token;
@@ -62,6 +64,8 @@ export const authOptions: NextAuthOptions = {
         session.user._id = token._id;
         session.user.isVerified = token.isVerified;
         session.user.username = token.username;
+        session.user.hasCompletedProfileSetup = token.hasCompletedProfileSetup;
+        session.user.profileImage = token.profileImage;
       }
       return session;
     },

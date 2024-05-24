@@ -1,14 +1,19 @@
 // this route by name goes to update profile but all it does is uploading profile photo
+//! major fixes
 
 import { fileUpload } from "@/helpers/cloudinary";
+import { dbConnect } from "@/lib/db";
 import User from "@/models/user";
 import { getServerSession } from "next-auth/next";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: Request) {
+  await dbConnect();
   try {
-    const server = await getServerSession();
-    const userId = server?.user._id;
-    const user = await User.findById(userId);
+    const body = await req.json();
+    const { username, profileImage } = body;
+    const decodedUsername = decodeURIComponent(username);
+    const user = await User.findOne({ username: decodedUsername });
     if (!user) {
       return Response.json(
         {
@@ -20,30 +25,20 @@ export async function POST(req: Request) {
         }
       );
     }
-    let profileImagePath;
-    if (
-      req.files &&
-      Array.isArray(req.files.profileImage) &&
-      req.files.profileImage.length > 0
-    ) {
-      profileImagePath = await req.files.profileImage[0].path;
-    }
-    const profileImage = await fileUpload(profileImagePath);
-    if (!profileImage) {
-      return Response.json(
-        {
-          success: false,
-          message: "An error occurred while uploading profile image",
-        },
-        {
-          status: 500,
-        }
-      );
-    }
-    user.profileImage = profileImage.secure_url;
-    user.hasCompletedProfileSetup = true; //if not updated will redirect to updating or to dashboard
+    user.profileImage = profileImage;
+    user.hasCompletedProfileSetup = true;
     await user.save();
+    return Response.json(
+      {
+        success: true,
+        message: "Profile updated successfully",
+      },
+      {
+        status: 200,
+      }
+    );
   } catch (error) {
+    console.log("error", error);
     return Response.json(
       {
         success: false,

@@ -7,6 +7,8 @@ declare module "next-auth" {
       _id?: string;
       isVerified?: boolean;
       username?: string;
+      hasCompletedProfileSetup?: boolean;
+      profileImage?: string;
     } & DefaultSession["user"];
   }
 
@@ -14,6 +16,8 @@ declare module "next-auth" {
     _id?: string;
     isVerified?: boolean;
     username?: string;
+    hasCompletedProfileSetup?: boolean;
+    profileImage?: string;
   }
 }
 
@@ -22,5 +26,7 @@ declare module "next-auth/jwt" {
     _id?: string;
     isVerified?: boolean;
     username?: string;
+    hasCompletedProfileSetup?: boolean;
+    profileImage?: string;
   }
 }

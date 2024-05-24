@@ -7,20 +7,23 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const fileUpload = async (localFilePath: string) => {
-  try {
-    if (!localFilePath) return null;
-    const res = await cloudinary.uploader.upload(localFilePath, {
-      resource_type: "auto",
-    });
-    console.log("Fiel uploaded successfully");
-    fs.unlinkSync(localFilePath);
-    return res;
-  } catch (error) {
-    fs.readFileSync(localFilePath);
-    console.log("Error in uploading files to cloudinary");
-    return null;
-  }
+const fileUpload = (fileUri: string, fileName: string): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload(fileUri, {
+        invalidate: true,
+        resource_type: "auto",
+        filename_override: fileName,
+        folder: "bro_code_profiles",
+        use_filename: true,
+      })
+      .then((result) => {
+        resolve({ success: true, result });
+      })
+      .catch((error: any) => {
+        console.error(error);
+        reject({ success: false, error: error.message });
+      });
+  });
 };
-
 export { fileUpload };

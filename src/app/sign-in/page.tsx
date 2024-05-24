@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signInSchema } from "@/schemas/signinSchema";
 import { useToast } from "@/components/ui/use-toast";
-import { signIn } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import {
@@ -23,6 +23,8 @@ import { useTheme } from "next-themes";
 const SignInPage = () => {
   const router = useRouter();
   const { theme } = useTheme();
+  const { data: session } = useSession();
+  const isProfileUpdateComplete = session?.user.hasCompletedProfileSetup;
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -52,9 +54,11 @@ const SignInPage = () => {
         });
       }
     }
-
-    if (result?.url) {
+    const session = await getSession();
+    if (result?.url && session?.user.hasCompletedProfileSetup) {
       router.replace("/dashboard");
+    } else if (result?.url && !session?.user.hasCompletedProfileSetup) {
+      router.replace(`/update-profile/${session?.user.username}`);
     }
   };
 
