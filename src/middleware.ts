@@ -28,6 +28,13 @@ export async function middleware(request: NextRequest) {
   ) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
+  if (
+    url.pathname === "/" ||
+    (url.pathname.startsWith("/site") &&
+      url.host === process.env.NEXT_PUBLIC_DOMAIN)
+  ) {
+    return NextResponse.rewrite(new URL("/site", request.url));
+  }
 
   return NextResponse.next();
 }
