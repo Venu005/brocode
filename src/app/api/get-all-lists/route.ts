@@ -1,8 +1,10 @@
+import { dbConnect } from "@/lib/db";
 import User from "@/models/user";
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth/next";
 
 export async function GET(req: Request) {
+  await dbConnect();
   //todo: converted to GET after logged in will work
   const session = await getServerSession();
   const userId = session?.user?._id;

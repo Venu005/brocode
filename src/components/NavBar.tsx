@@ -4,6 +4,7 @@ import MaxWidthWrapper from "./MaxWidthWrapper";
 import { Button, buttonVariants } from "./ui/button";
 import { signOut, useSession } from "next-auth/react";
 import { ModdleToggle } from "./ModeToggle";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 function NavBar() {
   const { data: session } = useSession();
@@ -26,9 +27,10 @@ function NavBar() {
           <div className="h-full flex items-center space-x-4">
             {user ? (
               <>
-                <span className="mr-4">
-                  Welcome, {user.username || user.email}
-                </span>
+                <Avatar className="cursor-pointer">
+                  <AvatarImage src={user.profileImage} className="text-sm" />
+                  <AvatarFallback>{user.username}</AvatarFallback>
+                </Avatar>
                 <Button
                   onClick={() => signOut()}
                   className="w-full md:w-auto bg-slate-100 text-black"

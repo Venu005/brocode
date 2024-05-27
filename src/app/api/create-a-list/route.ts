@@ -1,8 +1,10 @@
+import { dbConnect } from "@/lib/db";
 import { List } from "@/models/list";
 import Question from "@/models/questions";
 import User from "@/models/user";
 
 export async function POST(req: Request) {
+  await dbConnect();
   try {
     const { username, listType, listName, questions = [] } = await req.json();
     if (!listName) {
