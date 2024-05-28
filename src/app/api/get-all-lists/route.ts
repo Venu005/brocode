@@ -43,7 +43,6 @@ export async function POST(req: Request) {
       },
     ]);
     const createdLists = lists[0].createdLists;
-    console.log(createdLists);
     return Response.json(
       {
         success: true,
