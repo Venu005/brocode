@@ -22,7 +22,7 @@ const DashboardPage = () => {
       </div>
       <div className="flex items-center justify-between gap-x-10  ">
         <h1 className="sm:text-lg font-semibold">Ready to challenge?</h1>
-        <Link href={`/create-lists/${user?.username}`}>
+        <Link href={`/create-lists`}>
           <Button>Create a list</Button>
         </Link>
       </div>
