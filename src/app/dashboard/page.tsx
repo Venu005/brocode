@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import Lists from "./_components/Lists";
+import { HoverEffect } from "@/components/ui/card-hover-effect";
 
 const DashboardPage = () => {
   const session = useSession();
@@ -20,7 +21,7 @@ const DashboardPage = () => {
         </h1>
       </div>
       <div className="flex items-center justify-between gap-x-10  ">
-        <h1 className="text-lg font-semibold">Ready to challenge?</h1>
+        <h1 className="sm:text-lg font-semibold">Ready to challenge?</h1>
         <Link href={`/create-lists/${user?.username}`}>
           <Button>Create a list</Button>
         </Link>
@@ -33,7 +34,8 @@ const DashboardPage = () => {
           >
             Your lists
           </h1>
-          <Lists userId={user?._id} />
+
+          <HoverEffect username={user?.username} />
         </div>
       </div>
     </section>

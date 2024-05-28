@@ -2,14 +2,17 @@ import { dbConnect } from "@/lib/db";
 import User from "@/models/user";
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]/options";
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   await dbConnect();
   //todo: converted to GET after logged in will work
-  const session = await getServerSession();
-  const userId = session?.user?._id;
+  const { username } = await req.json();
+  if (!username) {
+    throw new Error("No username found");
+  }
   try {
-    const user = await User.findById(userId);
+    const user = await User.findOne({ username });
     if (!user) {
       return Response.json(
         {
@@ -39,11 +42,13 @@ export async function GET(req: Request) {
         },
       },
     ]);
+    const createdLists = lists[0].createdLists;
+    console.log(createdLists);
     return Response.json(
       {
         success: true,
         message: "Lists created by user",
-        lists,
+        lists: createdLists,
       },
       { status: 200 }
     );
